@@ -1,2 +1,2 @@
 # chess-mistake-trainer
-A full-stack chess trainer for reviewing missed opportunities from PGNs.
+A MERN + AWS app to review missed opportunities from PGNs.
