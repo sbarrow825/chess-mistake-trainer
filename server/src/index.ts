@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { connectDB } from './config/db';
 
 dotenv.config();
 
@@ -13,6 +14,16 @@ app.get('/api/health', (_req, res) => {
 });
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+
+async function startServer() {
+  await connectDB();
+
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
+
+startServer().catch((err) => {
+  console.error('Failed to start server:', err);
+  process.exit(1);
 });
