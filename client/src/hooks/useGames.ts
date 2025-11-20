@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-
-// TODO: match backend Game model, not just "some object"
-export type Game = Record<string, unknown>;
+import type { Game } from '../types/Game';
 
 export function useGames() {
   const [games, setGames] = useState<Game[] | null>(null);
@@ -19,7 +17,7 @@ export function useGames() {
           throw new Error(`Request failed: ${res.status} ${res.statusText}`);
         }
 
-        const data = await res.json();
+        const data = (await res.json()) as Game[];
 
         if (isMounted) {
           setGames(data);
