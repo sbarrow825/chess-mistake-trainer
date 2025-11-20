@@ -1,7 +1,9 @@
 import { useGames } from '../hooks/useGames';
+import { useNavigate } from 'react-router-dom';
 
 export function GamesPage() {
   const { games, loading, error } = useGames();
+  const navigate = useNavigate();
 
   if (loading) {
     return <div style={{ padding: '1rem' }}>Loading games…</div>;
@@ -60,26 +62,33 @@ export function GamesPage() {
               : '—';
 
             return (
-              <tr key={game._id}>
-                <td style={{ borderBottom: '1px solid #eee', padding: '0.5rem' }}>
+              <tr
+                key={game._id}
+                style={{ borderBottom: '1px solid #eee', cursor: 'pointer' }}
+                onClick={() => navigate(`/games/${game._id}`)}
+              >
+                <td style={{ padding: '0.5rem' }}>
                   {formattedDate}
                 </td>
-                <td style={{ borderBottom: '1px solid #eee', padding: '0.5rem' }}>
+                <td style={{ padding: '0.5rem' }}>
                   {game.white ?? '—'}
                 </td>
-                <td style={{ borderBottom: '1px solid #eee', padding: '0.5rem' }}>
+                <td style={{ padding: '0.5rem' }}>
                   {game.black ?? '—'}
                 </td>
-                <td style={{ borderBottom: '1px solid #eee', padding: '0.5rem' }}>
+                <td style={{ padding: '0.5rem' }}>
                   {game.result ?? '—'}
                 </td>
-                <td style={{ borderBottom: '1px solid #eee', padding: '0.5rem' }}>
+                <td style={{ padding: '0.5rem' }}>
                   {game.timeControl ?? '—'}
                 </td>
-                <td style={{ borderBottom: '1px solid #eee', padding: '0.5rem' }}>
+                <td style={{ padding: '0.5rem' }}>
                   {game.eco ?? '—'}
                 </td>
-                <td style={{ borderBottom: '1px solid #eee', padding: '0.5rem' }}>
+                <td
+                  style={{ padding: '0.5rem' }}
+                  onClick={(e) => e.stopPropagation()} // don't trigger row navigation when clicking the external link
+                >
                   {game.gameUrl ? (
                     <a
                       href={game.gameUrl}
@@ -96,8 +105,9 @@ export function GamesPage() {
             );
           })}
         </tbody>
+
       </table>
     </div>
   );
-
+  
 }
